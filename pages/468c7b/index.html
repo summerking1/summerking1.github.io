@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>redis配置详解</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="Devops运维技术博客">
+    <meta name="keywords" content="运维博客,个人技术博客,敏捷运维,自动化部署,微服务,运维面试题,技术文档,学习,面试,K8s,zabbix,Docker,spark,vue,python,shell,centos,linux,vim,github,markdown">
+    <meta name="baidu-site-verification" content="7F55weZDDc">
+    <meta name="theme-color" content="#11a8cd">
+    <link rel="preload" href="/assets/css/0.styles.c3dab397.css" as="style"><link rel="preload" href="/assets/js/app.cbdf558d.js" as="script"><link rel="preload" href="/assets/js/2.faed1170.js" as="script"><link rel="preload" href="/assets/js/135.d44c3c36.js" as="script"><link rel="prefetch" href="/assets/js/10.196212a2.js"><link rel="prefetch" href="/assets/js/100.40090156.js"><link rel="prefetch" href="/assets/js/101.a12b582b.js"><link rel="prefetch" href="/assets/js/102.2ff8ac11.js"><link rel="prefetch" href="/assets/js/103.2509a956.js"><link rel="prefetch" href="/assets/js/104.0377f88f.js"><link rel="prefetch" href="/assets/js/105.1a9dd207.js"><link rel="prefetch" href="/assets/js/106.a3d51f05.js"><link rel="prefetch" href="/assets/js/107.85a39f8b.js"><link rel="prefetch" href="/assets/js/108.1015f228.js"><link rel="prefetch" href="/assets/js/109.440cad9a.js"><link rel="prefetch" href="/assets/js/11.cdd4a8df.js"><link rel="prefetch" href="/assets/js/110.e042f56d.js"><link rel="prefetch" href="/assets/js/111.e2447371.js"><link rel="prefetch" href="/assets/js/112.9f956505.js"><link rel="prefetch" href="/assets/js/113.4f32746f.js"><link rel="prefetch" href="/assets/js/114.678eb581.js"><link rel="prefetch" href="/assets/js/115.5e19d9f1.js"><link rel="prefetch" href="/assets/js/116.77aa8039.js"><link rel="prefetch" href="/assets/js/117.b3c493de.js"><link rel="prefetch" href="/assets/js/118.89e389e4.js"><link rel="prefetch" href="/assets/js/119.e46cc327.js"><link rel="prefetch" href="/assets/js/12.034ff769.js"><link rel="prefetch" href="/assets/js/120.ca9b6d71.js"><link rel="prefetch" href="/assets/js/121.0a5b63db.js"><link rel="prefetch" href="/assets/js/122.79fba52b.js"><link rel="prefetch" href="/assets/js/123.162630aa.js"><link rel="prefetch" href="/assets/js/124.921a1148.js"><link rel="prefetch" href="/assets/js/125.cf40b70d.js"><link rel="prefetch" href="/assets/js/126.e242da28.js"><link rel="prefetch" href="/assets/js/127.526bce8a.js"><link rel="prefetch" href="/assets/js/128.3017b5b7.js"><link rel="prefetch" href="/assets/js/129.e5191506.js"><link rel="prefetch" href="/assets/js/13.5304bbcd.js"><link rel="prefetch" href="/assets/js/130.802a04a8.js"><link rel="prefetch" href="/assets/js/131.e9bff089.js"><link rel="prefetch" href="/assets/js/132.5fd3117a.js"><link rel="prefetch" href="/assets/js/133.3780190e.js"><link rel="prefetch" href="/assets/js/134.1c24f235.js"><link rel="prefetch" href="/assets/js/136.d9722c62.js"><link rel="prefetch" href="/assets/js/137.d0beafd6.js"><link rel="prefetch" href="/assets/js/138.8f075502.js"><link rel="prefetch" href="/assets/js/139.eff17fee.js"><link rel="prefetch" href="/assets/js/14.061c8bfb.js"><link rel="prefetch" href="/assets/js/140.2c084118.js"><link rel="prefetch" href="/assets/js/141.f30314d6.js"><link rel="prefetch" href="/assets/js/142.88057045.js"><link rel="prefetch" href="/assets/js/143.af249287.js"><link rel="prefetch" href="/assets/js/144.26991d26.js"><link rel="prefetch" href="/assets/js/145.37d4f35b.js"><link rel="prefetch" href="/assets/js/146.e1afea35.js"><link rel="prefetch" href="/assets/js/147.af5cd03d.js"><link rel="prefetch" href="/assets/js/148.906ba66e.js"><link rel="prefetch" href="/assets/js/149.f3fc95e8.js"><link rel="prefetch" href="/assets/js/15.94250661.js"><link rel="prefetch" href="/assets/js/150.a7030041.js"><link rel="prefetch" href="/assets/js/151.253eee3c.js"><link rel="prefetch" href="/assets/js/152.624551b2.js"><link rel="prefetch" href="/assets/js/153.7e154a4c.js"><link rel="prefetch" href="/assets/js/154.4145dfbf.js"><link rel="prefetch" href="/assets/js/155.c36bbe0e.js"><link rel="prefetch" href="/assets/js/156.43137012.js"><link rel="prefetch" href="/assets/js/157.d24a10ba.js"><link rel="prefetch" href="/assets/js/16.ddb61755.js"><link rel="prefetch" href="/assets/js/17.0191c21c.js"><link rel="prefetch" href="/assets/js/18.9ee0b4ef.js"><link rel="prefetch" href="/assets/js/19.b45a2118.js"><link rel="prefetch" href="/assets/js/20.bcb2b497.js"><link rel="prefetch" href="/assets/js/21.a8d11961.js"><link rel="prefetch" href="/assets/js/22.e021e47b.js"><link rel="prefetch" href="/assets/js/23.941b5a24.js"><link rel="prefetch" href="/assets/js/24.5c1fe716.js"><link rel="prefetch" href="/assets/js/25.4d708914.js"><link rel="prefetch" href="/assets/js/26.0a1036a6.js"><link rel="prefetch" href="/assets/js/27.e30af4f9.js"><link rel="prefetch" href="/assets/js/28.7853dbd0.js"><link rel="prefetch" href="/assets/js/29.32c5a584.js"><link rel="prefetch" href="/assets/js/3.28481347.js"><link rel="prefetch" href="/assets/js/30.cbc10256.js"><link rel="prefetch" href="/assets/js/31.3669ca86.js"><link rel="prefetch" href="/assets/js/32.5f9b3148.js"><link rel="prefetch" href="/assets/js/33.d2f5b832.js"><link rel="prefetch" href="/assets/js/34.5bfe004e.js"><link rel="prefetch" href="/assets/js/35.01c3cf2c.js"><link rel="prefetch" href="/assets/js/36.09975984.js"><link rel="prefetch" href="/assets/js/37.1a9ada0d.js"><link rel="prefetch" href="/assets/js/38.eb8aa592.js"><link rel="prefetch" href="/assets/js/39.7c6aa072.js"><link rel="prefetch" href="/assets/js/4.4ab2c4ee.js"><link rel="prefetch" href="/assets/js/40.ba7ee449.js"><link rel="prefetch" href="/assets/js/41.1dbe81b5.js"><link rel="prefetch" href="/assets/js/42.f6adbe73.js"><link rel="prefetch" href="/assets/js/43.6cc5b520.js"><link rel="prefetch" href="/assets/js/44.e3d41e1e.js"><link rel="prefetch" href="/assets/js/45.c5c47d43.js"><link rel="prefetch" href="/assets/js/46.3bf723ad.js"><link rel="prefetch" href="/assets/js/47.32ddace7.js"><link rel="prefetch" href="/assets/js/48.42550723.js"><link rel="prefetch" href="/assets/js/49.e2ceb736.js"><link rel="prefetch" href="/assets/js/5.aab55ac8.js"><link rel="prefetch" href="/assets/js/50.cedbdb8b.js"><link rel="prefetch" href="/assets/js/51.d2bbb8b1.js"><link rel="prefetch" href="/assets/js/52.c840d361.js"><link rel="prefetch" href="/assets/js/53.84f1182d.js"><link rel="prefetch" href="/assets/js/54.692c9e66.js"><link rel="prefetch" href="/assets/js/55.43894018.js"><link rel="prefetch" href="/assets/js/56.b7e1e285.js"><link rel="prefetch" href="/assets/js/57.ecc45519.js"><link rel="prefetch" href="/assets/js/58.c39ebbc3.js"><link rel="prefetch" href="/assets/js/59.310c239d.js"><link rel="prefetch" href="/assets/js/6.68c4a1a0.js"><link rel="prefetch" href="/assets/js/60.b23f4cb9.js"><link rel="prefetch" href="/assets/js/61.1db164fb.js"><link rel="prefetch" href="/assets/js/62.a776813c.js"><link rel="prefetch" href="/assets/js/63.f33d6538.js"><link rel="prefetch" href="/assets/js/64.28ba72c8.js"><link rel="prefetch" href="/assets/js/65.e32e95f0.js"><link rel="prefetch" href="/assets/js/66.f0f8d7b1.js"><link rel="prefetch" href="/assets/js/67.91fe3c38.js"><link rel="prefetch" href="/assets/js/68.96a4eec8.js"><link rel="prefetch" href="/assets/js/69.e6c8ac3f.js"><link rel="prefetch" href="/assets/js/7.f0c5055f.js"><link rel="prefetch" href="/assets/js/70.8fe302df.js"><link rel="prefetch" href="/assets/js/71.fbb27d9d.js"><link rel="prefetch" href="/assets/js/72.928ebd3e.js"><link rel="prefetch" href="/assets/js/73.7386c890.js"><link rel="prefetch" href="/assets/js/74.6018a9f2.js"><link rel="prefetch" href="/assets/js/75.1fcd9add.js"><link rel="prefetch" href="/assets/js/76.932bca35.js"><link rel="prefetch" href="/assets/js/77.a382a4d3.js"><link rel="prefetch" href="/assets/js/78.bdb8a29a.js"><link rel="prefetch" href="/assets/js/79.9c4117ba.js"><link rel="prefetch" href="/assets/js/8.546cf034.js"><link rel="prefetch" href="/assets/js/80.7d9902ad.js"><link rel="prefetch" href="/assets/js/81.62003871.js"><link rel="prefetch" href="/assets/js/82.61bb7b4c.js"><link rel="prefetch" href="/assets/js/83.d580161f.js"><link rel="prefetch" href="/assets/js/84.dde601e0.js"><link rel="prefetch" href="/assets/js/85.3210fe9f.js"><link rel="prefetch" href="/assets/js/86.77cc57a6.js"><link rel="prefetch" href="/assets/js/87.1b09afee.js"><link rel="prefetch" href="/assets/js/88.9fadcd20.js"><link rel="prefetch" href="/assets/js/89.7defd4a4.js"><link rel="prefetch" href="/assets/js/9.1ece92d2.js"><link rel="prefetch" href="/assets/js/90.cd971c94.js"><link rel="prefetch" href="/assets/js/91.e0840951.js"><link rel="prefetch" href="/assets/js/92.b0f5c5dc.js"><link rel="prefetch" href="/assets/js/93.8adb865d.js"><link rel="prefetch" href="/assets/js/94.195d0900.js"><link rel="prefetch" href="/assets/js/95.b9199896.js"><link rel="prefetch" href="/assets/js/96.37548819.js"><link rel="prefetch" href="/assets/js/97.5b399a8e.js"><link rel="prefetch" href="/assets/js/98.2730cb6d.js"><link rel="prefetch" href="/assets/js/99.30a17479.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.c3dab397.css">
+  </head>
+  <body class="theme-mode-light">
+    <div id="app" data-server-rendered="true"><div class="theme-container sidebar-open have-rightmenu"><header class="navbar blur"><div title="目录" class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/img/EB-logo.png" alt="" class="logo"> <!----></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/web/" class="nav-link">✨运维</a></div><div class="nav-item"><a href="/ui/" class="nav-link">🎉安装</a></div><div class="nav-item"><a href="/technology/" class="nav-link">👀踩坑</a></div><div class="nav-item"><a href="/study/" class="nav-link">🤷‍♂️学习</a></div><div class="nav-item"><a href="/about/" class="nav-link">😊关于</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="🌹索引" class="dropdown-title"><a href="/archives/" class="link-title">🌹索引</a> <span class="title" style="display:none;">🌹索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com//summerking1" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar" style="display:none;"><div class="blogger"><img src="/img/tx.png"> <div class="blogger-info"><h3>Summer</h3> <span>运维界的小白</span></div></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><a href="/web/" class="nav-link">✨运维</a></div><div class="nav-item"><a href="/ui/" class="nav-link">🎉安装</a></div><div class="nav-item"><a href="/technology/" class="nav-link">👀踩坑</a></div><div class="nav-item"><a href="/study/" class="nav-link">🤷‍♂️学习</a></div><div class="nav-item"><a href="/about/" class="nav-link">😊关于</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="🌹索引" class="dropdown-title"><a href="/archives/" class="link-title">🌹索引</a> <span class="title" style="display:none;">🌹索引</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/" class="nav-link">分类</a></li><li class="dropdown-item"><!----> <a href="/tags/" class="nav-link">标签</a></li><li class="dropdown-item"><!----> <a href="/archives/" class="nav-link">归档</a></li></ul></div></div> <a href="https://github.com//summerking1" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>K8s</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>shell</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Zabbix</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Python</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>Redis</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/pages/69521d/" class="sidebar-link">redis什么</a></li><li><a href="/pages/e581de/" class="sidebar-link">redis的优缺点</a></li><li><a href="/pages/44140e/" class="sidebar-link">es和redis的特点</a></li><li><a href="/pages/f238ea/" class="sidebar-link">redis性能测试压测方案</a></li><li><a href="/pages/84a3aa/" class="sidebar-link">redis参数说明</a></li><li><a href="/pages/468c7b/" aria-current="page" class="active sidebar-link">redis配置详解</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/pages/468c7b/#redis的配置分类" class="sidebar-link">Redis的配置分类</a></li><li class="sidebar-sub-header"><a href="/pages/468c7b/#redis的配置说明" class="sidebar-link">Redis的配置说明</a></li></ul></li><li><a href="/pages/1c16df/" class="sidebar-link">redis集群的三种模式</a></li><li><a href="/pages/42ab41/" class="sidebar-link">redis为什么这么快</a></li><li><a href="/pages/52d644/" class="sidebar-link">redis持久化</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Elasticsearch</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>prometheus</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Mysql</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <div><main class="page"> <div class="theme-vdoing-wrapper "><div class="articleInfo-wrap" data-v-f945b7fe><div class="articleInfo" data-v-f945b7fe><ul class="breadcrumbs" data-v-f945b7fe><li data-v-f945b7fe><a href="/" title="首页" class="iconfont icon-home router-link-active" data-v-f945b7fe></a></li> <li data-v-f945b7fe><a href="/study" title="学习-目录页" data-v-f945b7fe>学习</a></li> <li data-v-f945b7fe><a href="/study/#Redis" title="学习#Redis" data-v-f945b7fe>Redis</a></li></ul> <div class="info" data-v-f945b7fe><div title="作者" class="author iconfont icon-touxiang" data-v-f945b7fe><a href="https://github.com/summerking1" target="_blank" title="作者" class="beLink" data-v-f945b7fe>summer</a></div> <div title="创建时间" class="date iconfont icon-riqi" data-v-f945b7fe><a href="javascript:;" data-v-f945b7fe>2020-11-05</a></div> <!----></div></div></div> <!----> <div class="content-wrapper"><div class="right-menu-wrapper"><div class="right-menu-margin"><div class="right-menu-content"></div></div></div> <h1><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAABGpJREFUSA3tVVtoXFUU3fvOI53UlmCaKIFmwEhsE7QK0ipFEdHEKpXaZGrp15SINsXUWvBDpBgQRKi0+KKoFeJHfZA+ED9KKoIU2gYD9UejTW4rVIzm0VSTziPzuNu1z507dibTTjL4U/DAzLn3nL3X2o91ziX6f9wMFdh6Jvbm9nNSV0msViVO6tN1Rm7NMu2OpeJ9lWBUTDxrJbYTS0hInuwciu9eLHlFxCLCZEk3MegsJmZ5K/JD6t7FkFdEvGUo1g7qJoG3MHImqRIn8/nzY1K9UPKKiJmtnUqHVE3Gbuay6vJE/N2FEmuxFjW2nUuE0yQXRRxLiTUAzs36zhZvOXJPdX850EVnnLZkB8prodQoM5JGj7Xk2mvC7JB8tG04Ef5PiXtG0UtxupRQSfTnBoCy554x18yJHI6I+G5Eru4LHmPJZEQsrvPUbMiA8G/WgMK7w7I+ez7++o2ANfbrjvaOl1tFMs+htG3IrZH9/hDX1Pr8Tc0UvH8tcX29KzAgIGcEkINyW5BF9x891hw6VYqgJHEk0huccS7vh3C6gTiODL+26huuBtbct8eZnqLML8PkxGYpuPZBqtqwkSjgc4mB5gbgig5i+y0UDK35LMxXisn9xQtK+nd26gTIHsHe/oblK/b29fUmN/8Y+9jAQrnBp56m1LcDlDp9irKTExSKduXJVWSqdBMA08pEJnEIOB3FPPMybu/oeV8zFeYN3xx576Q6RH+VmplE4ncQV5v+5rzSoyOU7PuEAg8g803PwBJ0CExno/jcMbN8tONYeOmHiuUNryvm3fRUy4tMPVLdAGkUhNWuggGrJcXPv+ouCjz0MKUHz1J2/E8IC9nqTabcxgaBYM0hPhD5Y65FsbxRQKxCQrDjDctW7PUM3HuZunFyifSAqEfuzCp48Il24luWUWZoyJCaPR82jE0+kFA643wRFVni4RYSq3ohJO2pZ7B5dO4xkDWbEpossJPLSrPjYID8rS2UHTlvyNxqIGsg674XJJ7vnh5L7PNwC4hh2sjCI96mzszOTpxLF0T7l88Yz7lAuK6OnL8gXLOnTvpzSb22YG8W7us3jSebFHeeqnXRG1vt+MoUM84LQIBmMsCTAcOauTh0T0l0neQK7m2bLMt2mGxU3HYssS0J2cdv5wljlPsrIuZLAG/2DOZIXgCYT8uMGZN+e2kSirfxZOPCsC0f24nTZzspnVn9VePS1Z5vubmAGGXG8ZFno9Hel0yfA5ZPhF7Dh972BQJ2qCpgH67lmWtBYbvk6sz02wjky2vXyz0XErP/kFB619js1BtwfOV4OPRqOQBjy3Qbk18vigUPPSD5ceHnwck7W9bhAqZdd7SuG7w4/P2F/GaJh8c7e9qgow+Q7cGBo+98WsLkuktFqiZabtXuQTu/Y5ETbR0v7tNSFnvrmu6pjdoan2KjMu8q/Hmj1EfCO2ZGfEIbIXKUlw8qaX9/b2oeSJmFksSeT/Fn0V3nSypChh4Gjh74ybO9aeZ/AN2dwciu2/MhAAAAAElFTkSuQmCC">
+          redis配置详解
+        </h1> <div class="theme-vdoing-content content__default"><h2 id="redis的配置分类"><a href="#redis的配置分类" class="header-anchor">#</a> Redis的配置分类</h2> <ul><li>大概被分为几块大的区域，他们分别是：</li></ul> <ol><li>通用（general）</li> <li>快照（snapshotting）</li> <li>复制（replication）</li> <li>安全（security）</li> <li>限制（limits）</li> <li>追加模式（append only mode）</li> <li>LUA脚本（lua scripting）</li> <li>慢日志（slow log)</li> <li>事件通知（event notification）</li></ol> <h2 id="redis的配置说明"><a href="#redis的配置说明" class="header-anchor">#</a> Redis的配置说明</h2> <hr> <div class="language- line-numbers-mode"><pre class="language-text"><code>###################################  NETWORK ###################################
+ 
+# 指定 redis 只接收来自于该IP地址的请求，如果不进行设置，那么将处理所有请求
+bind 127.0.0.1
+ 
+#是否开启保护模式，默认开启。要是配置里没有指定bind和密码。开启该参数后，redis只会本地进行访问，
+拒绝外部访问。要是开启了密码和bind，可以开启。否则最好关闭，设置为no
+protected-mode yes
+ 
+#redis监听的端口号
+port 6379
+ 
+#此参数确定了TCP连接中已完成队列(完成三次握手之后)的长度， 当然此值必须不大于Linux系统定义
+的/proc/sys/net/core/somaxconn值，默认是511，而Linux的默认参数值是128。当系统并发量大并且客户端
+速度缓慢的时候，可以将这二个参数一起参考设定。该内核参数默认值一般是128，对于负载很大的服务程序来说
+大大的不够。一般会将它修改为2048或者更大。在/etc/sysctl.conf中添加:net.core.somaxconn = 2048，
+然后在终端中执行sysctl -p
+tcp-backlog 511
+ 
+#此参数为设置客户端空闲超过timeout，服务端会断开连接，为0则服务端不会主动断开连接，不能小于0
+timeout 0
+ 
+#tcp keepalive参数。如果设置不为0，就使用配置tcp的SO_KEEPALIVE值，使用keepalive有两个好处:检测挂
+掉的对端。降低中间设备出问题而导致网络看似连接却已经与对端端口的问题。在Linux内核中，设置了
+keepalive，redis会定时给对端发送ack。检测到对端关闭需要两倍的设置值
+tcp-keepalive 300
+ 
+#是否在后台执行，yes：后台运行；no：不是后台运行
+daemonize yes
+ 
+#redis的进程文件
+pidfile /var/run/redis/redis.pid
+ 
+#指定了服务端日志的级别。级别包括：debug（很多信息，方便开发、测试），verbose（许多有用的信息，
+但是没有debug级别信息多），notice（适当的日志级别，适合生产环境），warn（只有非常重要的信息）
+loglevel notice
+ 
+#指定了记录日志的文件。空字符串的话，日志会打印到标准输出设备。后台运行的redis标准输出是/dev/null
+logfile /usr/local/redis/var/redis.log
+ 
+ 
+#是否打开记录syslog功能
+# syslog-enabled no
+ 
+#syslog的标识符。
+# syslog-ident redis
+ 
+#日志的来源、设备
+# syslog-facility local0
+ 
+#数据库的数量，默认使用的数据库是0。可以通过”SELECT 【数据库序号】“命令选择一个数据库，序号从0开始
+databases 16
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br></div></div><hr> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">###################################  SNAPSHOTTING  ###################################</span>
+ 
+<span class="token comment">#RDB核心规则配置 save &lt;指定时间间隔&gt; &lt;执行指定次数更新操作&gt;，满足条件就将内存中的数据同步到硬盘</span>
+中。官方出厂配置默认是 <span class="token number">900</span>秒内有1个更改，300秒内有10个更改以及60秒内有10000个更改，则将内存中的
+数据快照写入磁盘。
+若不想用RDB方案，可以把 save <span class="token string">&quot;&quot;</span> 的注释打开，下面三个注释
+<span class="token comment">#   save &quot;&quot;</span>
+save <span class="token number">900</span> <span class="token number">1</span>
+save <span class="token number">300</span> <span class="token number">10</span>
+save <span class="token number">60</span> <span class="token number">10000</span>
+ 
+<span class="token comment">#当RDB持久化出现错误后，是否依然进行继续进行工作，yes：不能进行工作，no：可以继续进行工作，可以通</span>
+过info中的rdb_last_bgsave_status了解RDB持久化是否有错误
+stop-writes-on-bgsave-error <span class="token function">yes</span>
+ 
+<span class="token comment">#配置存储至本地数据库时是否压缩数据，默认为yes。Redis采用LZF压缩方式，但占用了一点CPU的时间。若关闭该选项，</span>
+但会导致数据库文件变的巨大。建议开启。
+rdbcompression <span class="token function">yes</span>
+ 
+<span class="token comment">#是否校验rdb文件;从rdb格式的第五个版本开始，在rdb文件的末尾会带上CRC64的校验和。这跟有利于文件的</span>
+容错性，但是在保存rdb文件的时候，会有大概10%的性能损耗，所以如果你追求高性能，可以关闭该配置
+rdbchecksum <span class="token function">yes</span>
+ 
+<span class="token comment">#指定本地数据库文件名，一般采用默认的 dump.rdb</span>
+dbfilename dump.rdb
+ 
+<span class="token comment">#数据目录，数据库的写入会在这个目录。rdb、aof文件也会写在这个目录</span>
+<span class="token function">dir</span> /usr/local/redis/var
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br></div></div><hr> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">################################# REPLICATION #################################</span>
+ 
+<span class="token comment"># 复制选项，slave复制对应的master。</span>
+<span class="token comment"># replicaof &lt;masterip&gt; &lt;masterport&gt;</span>
+ 
+<span class="token comment">#如果master设置了requirepass，那么slave要连上master，需要有master的密码才行。masterauth就是用来</span>
+配置master的密码，这样可以在连上master后进行认证。
+<span class="token comment"># masterauth &lt;master-password&gt;</span>
+ 
+<span class="token comment">#当从库同主机失去连接或者复制正在进行，从机库有两种运行方式：1) 如果slave-serve-stale-data设置为</span>
+yes<span class="token punctuation">(</span>默认设置<span class="token punctuation">)</span>，从库会继续响应客户端的请求。2<span class="token punctuation">)</span> 如果slave-serve-stale-data设置为no，
+INFO,replicaOF, AUTH, PING, SHUTDOWN, REPLCONF, ROLE, CONFIG,SUBSCRIBE, UNSUBSCRIBE,
+PSUBSCRIBE, PUNSUBSCRIBE, PUBLISH, PUBSUB,COMMAND, POST, HOST: and LATENCY命令之外的任何请求
+都会返回一个错误”SYNC with master <span class="token keyword">in</span> progress”。
+replica-serve-stale-data <span class="token function">yes</span>
+ 
+<span class="token comment">#作为从服务器，默认情况下是只读的（yes），可以修改成NO，用于写（不建议）</span>
+<span class="token comment">#replica-read-only yes</span>
+ 
+<span class="token comment"># 是否使用socket方式复制数据。目前redis复制提供两种方式，disk和socket。如果新的slave连上来或者</span>
+重连的slave无法部分同步，就会执行全量同步，master会生成rdb文件。有2种方式：disk方式是master创建
+一个新的进程把rdb文件保存到磁盘，再把磁盘上的rdb文件传递给slave。socket是master创建一个新的进
+程，直接把rdb文件以socket的方式发给slave。disk方式的时候，当一个rdb保存的过程中，多个slave都能
+共享这个rdb文件。socket的方式就的一个个slave顺序复制。在磁盘速度缓慢，网速快的情况下推荐用socket方式。
+repl-diskless-sync no
+ 
+<span class="token comment">#diskless复制的延迟时间，防止设置为0。一旦复制开始，节点不会再接收新slave的复制请求直到下一个rdb传输。</span>
+所以最好等待一段时间，等更多的slave连上来
+repl-diskless-sync-delay <span class="token number">5</span>
+ 
+<span class="token comment">#slave根据指定的时间间隔向服务器发送ping请求。时间间隔可以通过 repl_ping_slave_period 来设置，默认10秒。</span>
+<span class="token comment"># repl-ping-slave-period 10</span>
+ 
+<span class="token comment"># 复制连接超时时间。master和slave都有超时时间的设置。master检测到slave上次发送的时间超过repl-timeout，即认为slave离线，清除该slave信息。slave检测到上次和master交互的时间超过repl-timeout，则认为master离线。需要注意的是repl-timeout需要设置一个比repl-ping-slave-period更大的值，不然会经常检测到超时</span>
+<span class="token comment"># repl-timeout 60</span>
+ 
+ 
+<span class="token comment">#是否禁止复制tcp链接的tcp nodelay参数，可传递yes或者no。默认是no，即使用tcp nodelay。如果</span>
+master设置了yes来禁止tcp nodelay设置，在把数据复制给slave的时候，会减少包的数量和更小的网络带
+宽。但是这也可能带来数据的延迟。默认我们推荐更小的延迟，但是在数据量传输很大的场景下，建议选择yes
+repl-disable-tcp-nodelay no
+ 
+<span class="token comment">#复制缓冲区大小，这是一个环形复制缓冲区，用来保存最新复制的命令。这样在slave离线的时候，不需要完</span>
+全复制master的数据，如果可以执行部分同步，只需要把缓冲区的部分数据复制给slave，就能恢复正常复制状
+态。缓冲区的大小越大，slave离线的时间可以更长，复制缓冲区只有在有slave连接的时候才分配内存。没有
+slave的一段时间，内存会被释放出来，默认1m
+<span class="token comment"># repl-backlog-size 1mb</span>
+ 
+<span class="token comment"># master没有slave一段时间会释放复制缓冲区的内存，repl-backlog-ttl用来设置该时间长度。单位为秒。</span>
+<span class="token comment"># repl-backlog-ttl 3600</span>
+ 
+<span class="token comment"># 当master不可用，Sentinel会根据slave的优先级选举一个master。最低的优先级的slave，当选master。</span>
+而配置成0，永远不会被选举
+replica-priority <span class="token number">100</span>
+ 
+<span class="token comment">#redis提供了可以让master停止写入的方式，如果配置了min-replicas-to-write，健康的slave的个数小于N，mater就禁止写入。master最少得有多少个健康的slave存活才能执行写命令。这个配置虽然不能保证N个slave都一定能接收到master的写操作，但是能避免没有足够健康的slave的时候，master不能写入来避免数据丢失。设置为0是关闭该功能</span>
+<span class="token comment"># min-replicas-to-write 3</span>
+ 
+<span class="token comment"># 延迟小于min-replicas-max-lag秒的slave才认为是健康的slave</span>
+<span class="token comment"># min-replicas-max-lag 10</span>
+ 
+<span class="token comment"># 设置1或另一个设置为0禁用这个特性。</span>
+<span class="token comment"># Setting one or the other to 0 disables the feature.</span>
+<span class="token comment"># By default min-replicas-to-write is set to 0 (feature disabled) and</span>
+<span class="token comment"># min-replicas-max-lag is set to 10.</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br></div></div><hr> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#################################  SECURITY #################################</span>
+<span class="token comment">#requirepass配置可以让用户使用AUTH命令来认证密码，才能使用其他命令。这让redis可以使用在不受信任的</span>
+网络中。为了保持向后的兼容性，可以注释该命令，因为大部分用户也不需要认证。使用requirepass的时候需要
+注意，因为redis太快了，每秒可以认证15w次密码，简单的密码很容易被攻破，所以最好使用一个更复杂的密码
+<span class="token comment"># requirepass foobared</span>
+<span class="token comment">#把危险的命令给修改成其他名称。比如CONFIG命令可以重命名为一个很难被猜到的命令，这样用户不能使用，而</span>
+内部工具还能接着使用
+<span class="token comment"># rename-command CONFIG b840fc02d524045429941cc15f59e41cb7be6c52</span>
+<span class="token comment">#设置成一个空的值，可以禁止一个命令</span>
+<span class="token comment"># rename-command CONFIG &quot;&quot;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><hr> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#################################  CLIENTS #################################</span>
+
+<span class="token comment"># 设置能连上redis的最大客户端连接数量。默认是10000个客户端连接。由于redis不区分连接是客户端连接还</span>
+是内部打开文件或者和slave连接等，所以maxclients最小建议设置到32。如果超过了maxclients，redis会给
+新的连接发送’max number of clients reached’，并关闭连接
+<span class="token comment"># maxclients 10000</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><hr> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#######################    MEMORY MANAGEMENT    ##########################</span>
+redis配置的最大内存容量。当内存满了，需要配合maxmemory-policy策略进行处理。注意slave的输出缓冲区
+是不计算在maxmemory内的。所以为了防止主机内存使用完，建议设置的maxmemory需要更小一些
+maxmemory <span class="token number">122000000</span>
+<span class="token comment">#内存容量超过maxmemory后的处理策略。</span>
+<span class="token comment">#volatile-lru：利用LRU算法移除设置过过期时间的key。</span>
+<span class="token comment">#volatile-random：随机移除设置过过期时间的key。</span>
+<span class="token comment">#volatile-ttl：移除即将过期的key，根据最近过期时间来删除（辅以TTL）</span>
+<span class="token comment">#allkeys-lru：利用LRU算法移除任何key。</span>
+<span class="token comment">#allkeys-random：随机移除任何key。</span>
+<span class="token comment">#noeviction：不移除任何key，只是返回一个写错误。</span>
+<span class="token comment">#上面的这些驱逐策略，如果redis没有合适的key驱逐，对于写命令，还是会返回错误。redis将不再接收写请求，只接收get请求。写命令包括：set setnx setex append incr decr rpush lpush rpushx lpushx linsert lset rpoplpush sadd sinter sinterstore sunion sunionstore sdiff sdiffstore zadd zincrby zunionstore zinterstore hset hsetnx hmset hincrby incrby decrby getset mset msetnx exec sort。</span>
+<span class="token comment"># maxmemory-policy noeviction</span>
+<span class="token comment"># lru检测的样本数。使用lru或者ttl淘汰算法，从需要淘汰的列表中随机选择sample个key，选出闲置时间最长的key移除</span>
+<span class="token comment"># maxmemory-samples 5</span>
+<span class="token comment"># 是否开启salve的最大内存</span>
+<span class="token comment"># replica-ignore-maxmemory yes</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><hr> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code> <span class="token comment">##########################    LAZY FREEING    #############################</span>
+<span class="token comment">#以非阻塞方式释放内存</span>
+<span class="token comment">#使用以下配置指令调用了</span>
+lazyfree-lazy-eviction no
+lazyfree-lazy-expire no
+lazyfree-lazy-server-del no
+replica-lazy-flush no
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">########################   APPEND ONLY MODE    ###########################</span>
+<span class="token comment">#Redis 默认不开启。它的出现是为了弥补RDB的不足（数据的不一致性），所以它采用日志的形式来记录每个写</span>
+操作，并追加到文件中。Redis 重启的会根据日志文件的内容将写指令从前到后执行一次以完成数据的恢复工作
+默认redis使用的是rdb方式持久化，这种方式在许多应用中已经足够用了。但是redis如果中途宕机，会导致可
+能有几分钟的数据丢失，根据save来策略进行持久化，Append Only File是另一种持久化方式，可以提供更好的
+持久化特性。Redis会把每次写入的数据在接收后都写入 appendonly.aof 文件，每次启动时Redis都会先把这
+个文件的数据读入内存里，先忽略RDB文件。若开启rdb则将no改为yes
+appendonly no
+ 
+指定本地数据库文件名，默认值为 appendonly.aof
+appendfilename <span class="token string">&quot;appendonly.aof&quot;</span>
+ 
+ 
+<span class="token comment">#aof持久化策略的配置</span>
+<span class="token comment">#no表示不执行fsync，由操作系统保证数据同步到磁盘，速度最快</span>
+<span class="token comment">#always表示每次写入都执行fsync，以保证数据同步到磁盘</span>
+<span class="token comment">#everysec表示每秒执行一次fsync，可能会导致丢失这1s数据</span>
+<span class="token comment"># appendfsync always</span>
+appendfsync everysec
+<span class="token comment"># appendfsync no</span>
+ 
+<span class="token comment"># 在aof重写或者写入rdb文件的时候，会执行大量IO，此时对于everysec和always的aof模式来说，执行</span>
+fsync会造成阻塞过长时间，no-appendfsync-on-rewrite字段设置为默认设置为no。如果对延迟要求很高的
+应用，这个字段可以设置为yes，否则还是设置为no，这样对持久化特性来说这是更安全的选择。设置为yes表
+示rewrite期间对新写操作不fsync,暂时存在内存中,等rewrite完成后再写入，默认为no，建议yes。Linux的
+默认fsync策略是30秒。可能丢失30秒数据
+no-appendfsync-on-rewrite no
+ 
+<span class="token comment">#aof自动重写配置。当目前aof文件大小超过上一次重写的aof文件大小的百分之多少进行重写，即当aof文件</span>
+增长到一定大小的时候Redis能够调用bgrewriteaof对日志文件进行重写。当前AOF文件大小是上次日志重写得
+到AOF文件大小的二倍（设置为100）时，自动启动新的日志重写过程
+auto-aof-rewrite-percentage <span class="token number">100</span>
+ 
+<span class="token comment">#设置允许重写的最小aof文件大小，避免了达到约定百分比但尺寸仍然很小的情况还要重写</span>
+auto-aof-rewrite-min-size 64mb
+ 
+<span class="token comment">#aof文件可能在尾部是不完整的，当redis启动的时候，aof文件的数据被载入内存。重启可能发生在redis所</span>
+在的主机操作系统宕机后，尤其在ext4文件系统没有加上data<span class="token operator">=</span>ordered选项（redis宕机或者异常终止不会造
+成尾部不完整现象。）出现这种现象，可以选择让redis退出，或者导入尽可能多的数据。如果选择的是yes，
+当截断的aof文件被导入的时候，会自动发布一个log给客户端然后load。如果是no，用户必须手动redis-
+check-aof修复AOF文件才可以
+aof-load-truncated <span class="token function">yes</span>
+ 
+<span class="token comment">#加载redis时，可以识别AOF文件以“redis”开头。</span>
+<span class="token comment">#字符串并加载带前缀的RDB文件，然后继续加载AOF尾巴</span>
+aof-use-rdb-preamble <span class="token function">yes</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br></div></div><hr> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#########################   LUA SCRIPTING     ############################</span>
+<span class="token comment"># 如果达到最大时间限制（毫秒），redis会记个log，然后返回error。当一个脚本超过了最大时限。只有</span>
+SCRIPT KILL和SHUTDOWN NOSAVE可以用。第一个可以杀没有调write命令的东西。要是已经调用了write，只能
+用第二个命令杀
+lua-time-limit <span class="token number">5000</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><hr> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#########################   REDIS CLUSTER     ############################</span>
+<span class="token comment"># 集群开关，默认是不开启集群模式</span>
+<span class="token comment"># cluster-enabled yes</span>
+ 
+<span class="token comment">#集群配置文件的名称，每个节点都有一个集群相关的配置文件，持久化保存集群的信息。这个文件并不需要手动</span>
+配置，这个配置文件有Redis生成并更新，每个Redis集群节点需要一个单独的配置文件，请确保与实例运行的系
+统中配置文件名称不冲突
+<span class="token comment"># cluster-config-file nodes-6379.conf</span>
+ 
+<span class="token comment">#节点互连超时的阀值。集群节点超时毫秒数</span>
+<span class="token comment"># cluster-node-timeout 15000</span>
+ 
+<span class="token comment">#在进行故障转移的时候，全部slave都会请求申请为master，但是有些slave可能与master断开连接一段时间</span>
+了，导致数据过于陈旧，这样的slave不应该被提升为master。该参数就是用来判断slave节点与master断线的时
+间是否过长。判断方法是：
+<span class="token comment">#比较slave断开连接的时间和(node-timeout * slave-validity-factor) + repl-ping-slave-period</span>
+<span class="token comment">#如果节点超时时间为三十秒, 并且slave-validity-factor为10,假设默认的repl-ping-slave-period是10</span>
+秒，即如果超过310秒slave将不会尝试进行故障转移
+<span class="token comment"># cluster-replica-validity-factor 10</span>
+ 
+<span class="token comment"># master的slave数量大于该值，slave才能迁移到其他孤立master上，如这个参数若被设为2，那么只有当一</span>
+个主节点拥有2 个可工作的从节点时，它的一个从节点会尝试迁移
+<span class="token comment"># cluster-migration-barrier 1</span>
+ 
+<span class="token comment">#默认情况下，集群全部的slot有节点负责，集群状态才为ok，才能提供服务。设置为no，可以在slot没有全</span>
+部分配的时候提供服务。不建议打开该配置，这样会造成分区的时候，小分区的master一直在接受写请求，而
+造成很长时间数据不一致
+<span class="token comment"># cluster-require-full-coverage yes</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br></div></div><hr> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">####################  CLUSTER DOCKER/NAT support  #######################</span>
+<span class="token comment">#*群集公告IP</span>
+<span class="token comment">#*群集公告端口</span>
+<span class="token comment">#*群集公告总线端口</span>
+<span class="token comment"># Example:</span>
+<span class="token comment">#</span>
+<span class="token comment"># cluster-announce-ip 10.1.1.5</span>
+<span class="token comment"># cluster-announce-port 6379</span>
+<span class="token comment"># cluster-announce-bus-port 6380</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br></div></div><hr> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#############################  SLOW LOG #################################</span>
+<span class="token comment"># slog log是用来记录redis运行中执行比较慢的命令耗时。当命令的执行超过了指定时间，就记录在slow log</span>
+中，slog log保存在内存中，所以没有IO操作。
+<span class="token comment">#执行时间比slowlog-log-slower-than大的请求记录到slowlog里面，单位是微秒，所以1000000就是1秒。注</span>
+意，负数时间会禁用慢查询日志，而0则会强制记录所有命令。
+slowlog-log-slower-than <span class="token number">10000</span>
+ 
+<span class="token comment">#慢查询日志长度。当一个新的命令被写进日志的时候，最老的那个记录会被删掉。这个长度没有限制。只要有足</span>
+够的内存就行。你可以通过 SLOWLOG RESET 来释放内存
+slowlog-max-len <span class="token number">128</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><hr> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">########################  LATENCY MONITOR ############################</span>
+<span class="token comment">#延迟监控功能是用来监控redis中执行比较缓慢的一些操作，用LATENCY打印redis实例在跑命令时的耗时图表。</span>
+只记录大于等于下边设置的值的操作。0的话，就是关闭监视。默认延迟监控功能是关闭的，如果你需要打开，也
+可以通过CONFIG SET命令动态设置
+latency-monitor-threshold <span class="token number">0</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><hr> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#######################  EVENT NOTIFICATION ###########################</span>
+<span class="token comment">#键空间通知使得客户端可以通过订阅频道或模式，来接收那些以某种方式改动了 Redis 数据集的事件。因为开启键空间通知功能需要消耗一些 CPU ，所以在默认配置下，该功能处于关闭状态。</span>
+<span class="token comment">#notify-keyspace-events 的参数可以是以下字符的任意组合，它指定了服务器该发送哪些类型的通知：</span>
+<span class="token comment">##K 键空间通知，所有通知以 __keyspace@__ 为前缀</span>
+<span class="token comment">##E 键事件通知，所有通知以 __keyevent@__ 为前缀</span>
+<span class="token comment">##g DEL 、 EXPIRE 、 RENAME 等类型无关的通用命令的通知</span>
+<span class="token comment">##$ 字符串命令的通知</span>
+<span class="token comment">##l 列表命令的通知</span>
+<span class="token comment">##s 集合命令的通知</span>
+<span class="token comment">##h 哈希命令的通知</span>
+<span class="token comment">##z 有序集合命令的通知</span>
+<span class="token comment">##x 过期事件：每当有过期键被删除时发送</span>
+<span class="token comment">##e 驱逐(evict)事件：每当有键因为 maxmemory 政策而被删除时发送</span>
+<span class="token comment">##A 参数 g$lshzxe 的别名</span>
+<span class="token comment">#输入的参数中至少要有一个 K 或者 E，否则的话，不管其余的参数是什么，都不会有任何 通知被分发。详细使用可以参考http://redis.io/topics/notifications</span>
+ 
+notify-keyspace-events <span class="token string">&quot;&quot;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><hr> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">#######################  ADVANCED CONFIG  ###########################</span>
+<span class="token comment"># 数据量小于等于hash-max-ziplist-entries的用ziplist，大于hash-max-ziplist-entries用hash</span>
+hash-max-ziplist-entries <span class="token number">512</span>
+ 
+<span class="token comment"># value大小小于等于hash-max-ziplist-value的用ziplist，大于hash-max-ziplist-value用hash</span>
+hash-max-ziplist-value <span class="token number">64</span>
+ 
+<span class="token comment">#-5:最大大小：64 KB&lt;--不建议用于正常工作负载</span>
+<span class="token comment">#-4:最大大小：32 KB&lt;--不推荐</span>
+<span class="token comment">#-3:最大大小：16 KB&lt;--可能不推荐</span>
+<span class="token comment">#-2:最大大小：8kb&lt;--良好</span>
+<span class="token comment">#-1:最大大小：4kb&lt;--良好</span>
+list-max-ziplist-size -2
+ 
+<span class="token comment">#0:禁用所有列表压缩</span>
+<span class="token comment">#1：深度1表示“在列表中的1个节点之后才开始压缩，</span>
+<span class="token comment">#从头部或尾部</span>
+<span class="token comment">#所以：【head】-&gt;node-&gt;node-&gt;…-&gt;node-&gt;【tail】</span>
+<span class="token comment">#[头部]，[尾部]将始终未压缩；内部节点将压缩。</span>
+<span class="token comment">#2:[头部]-&gt;[下一步]-&gt;节点-&gt;节点-&gt;…-&gt;节点-&gt;[上一步]-&gt;[尾部]</span>
+<span class="token comment">#2这里的意思是：不要压缩头部或头部-&gt;下一个或尾部-&gt;上一个或尾部，</span>
+<span class="token comment">#但是压缩它们之间的所有节点。</span>
+<span class="token comment">#3:[头部]-&gt;[下一步]-&gt;[下一步]-&gt;节点-&gt;节点-&gt;…-&gt;节点-&gt;[上一步]-&gt;[上一步]-&gt;[尾部]</span>
+list-compress-depth <span class="token number">0</span>
+ 
+<span class="token comment"># 数据量小于等于set-max-intset-entries用iniset，大于set-max-intset-entries用set</span>
+set-max-intset-entries <span class="token number">512</span>
+ 
+<span class="token comment">#数据量小于等于zset-max-ziplist-entries用ziplist，大于zset-max-ziplist-entries用zset</span>
+zset-max-ziplist-entries <span class="token number">128</span>
+ 
+<span class="token comment">#value大小小于等于zset-max-ziplist-value用ziplist，大于zset-max-ziplist-value用zset</span>
+zset-max-ziplist-value <span class="token number">64</span>
+ 
+<span class="token comment">#value大小小于等于hll-sparse-max-bytes使用稀疏数据结构（sparse），大于hll-sparse-max-bytes使</span>
+用稠密的数据结构（dense）。一个比16000大的value是几乎没用的，建议的value大概为3000。如果对CPU要
+求不高，对空间要求较高的，建议设置到10000左右
+hll-sparse-max-bytes <span class="token number">3000</span>
+ 
+<span class="token comment">#宏观节点的最大流/项目的大小。在流数据结构是一个基数</span>
+<span class="token comment">#树节点编码在这项大的多。利用这个配置它是如何可能#大节点配置是单字节和</span>
+<span class="token comment">#最大项目数，这可能包含了在切换到新节点的时候</span>
+<span class="token comment"># appending新的流条目。如果任何以下设置来设置</span>
+<span class="token comment"># ignored极限是零，例如，操作系统，它有可能只是一集</span>
+通过设置限制最大<span class="token comment">#纪录到最大字节0和最大输入到所需的值</span>
+stream-node-max-bytes <span class="token number">4096</span>
+stream-node-max-entries <span class="token number">100</span>
+ 
+<span class="token comment">#Redis将在每100毫秒时使用1毫秒的CPU时间来对redis的hash表进行重新hash，可以降低内存的使用。当你</span>
+的使用场景中，有非常严格的实时性需要，不能够接受Redis时不时的对请求有2毫秒的延迟的话，把这项配置
+为no。如果没有这么严格的实时性要求，可以设置为yes，以便能够尽可能快的释放内存
+activerehashing <span class="token function">yes</span>
+ 
+<span class="token comment">##对客户端输出缓冲进行限制可以强迫那些不从服务器读取数据的客户端断开连接，用来强制关闭传输缓慢的客户端。</span>
+<span class="token comment">#对于normal client，第一个0表示取消hard limit，第二个0和第三个0表示取消soft limit，normal </span>
+client默认取消限制，因为如果没有寻问，他们是不会接收数据的
+client-output-buffer-limit normal <span class="token number">0</span> <span class="token number">0</span> <span class="token number">0</span>
+ 
+<span class="token comment">#对于slave client和MONITER client，如果client-output-buffer一旦超过256mb，又或者超过64mb持续</span>
+<span class="token number">60</span>秒，那么服务器就会立即断开客户端连接
+client-output-buffer-limit replica 256mb 64mb <span class="token number">60</span>
+ 
+<span class="token comment">#对于pubsub client，如果client-output-buffer一旦超过32mb，又或者超过8mb持续60秒，那么服务器就</span>
+会立即断开客户端连接
+client-output-buffer-limit pubsub 32mb 8mb <span class="token number">60</span>
+ 
+<span class="token comment"># 这是客户端查询的缓存极限值大小</span>
+<span class="token comment"># client-query-buffer-limit 1gb</span>
+ 
+<span class="token comment">#在redis协议中，批量请求，即表示单个字符串，通常限制为512 MB。但是您可以更改此限制。</span>
+<span class="token comment"># proto-max-bulk-len 512mb</span>
+ 
+<span class="token comment">#redis执行任务的频率为1s除以hz</span>
+hz <span class="token number">10</span>
+ 
+<span class="token comment">#当启用动态赫兹时，实际配置的赫兹将用作作为基线，但实际配置的赫兹值的倍数</span>
+<span class="token comment">#在连接更多客户端后根据需要使用。这样一个闲置的实例将占用很少的CPU时间，而繁忙的实例将反应更灵敏</span>
+dynamic-hz <span class="token function">yes</span>
+ 
+<span class="token comment">#在aof重写的时候，如果打开了aof-rewrite-incremental-fsync开关，系统会每32MB执行一次fsync。这</span>
+对于把文件写入磁盘是有帮助的，可以避免过大的延迟峰值
+aof-rewrite-incremental-fsync <span class="token function">yes</span>
+ 
+<span class="token comment">#在rdb保存的时候，如果打开了rdb-save-incremental-fsync开关，系统会每32MB执行一次fsync。这</span>
+对于把文件写入磁盘是有帮助的，可以避免过大的延迟峰值
+rdb-save-incremental-fsync <span class="token function">yes</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br></div></div><hr> <div class="language-shell line-numbers-mode"><pre class="language-shell"><code><span class="token comment">###################### ACTIVE DEFRAGMENTATION  ##########################</span>
+<span class="token comment"># 已启用活动碎片整理</span>
+<span class="token comment"># activedefrag yes</span>
+<span class="token comment"># 启动活动碎片整理的最小碎片浪费量</span>
+<span class="token comment"># active-defrag-ignore-bytes 100mb</span>
+<span class="token comment"># 启动活动碎片整理的最小碎片百分比</span>
+<span class="token comment"># active-defrag-threshold-lower 10</span>
+<span class="token comment"># 我们使用最大努力的最大碎片百分比</span>
+<span class="token comment"># active-defrag-threshold-upper 100</span>
+<span class="token comment"># 以CPU百分比表示的碎片整理的最小工作量</span>
+<span class="token comment"># active-defrag-cycle-min 5</span>
+<span class="token comment"># 在CPU的百分比最大的努力和碎片整理</span>
+<span class="token comment"># active-defrag-cycle-max 75</span>
+<span class="token comment">#将从中处理的set/hash/zset/list字段的最大数目</span>
+<span class="token comment">#主词典扫描</span>
+<span class="token comment"># active-defrag-max-scan-fields 1000</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br></div></div></div></div> <div class="page-edit"><!----> <!----> <!----></div> <div class="page-nav-wapper"><div class="page-nav-centre-wrap"><a href="/pages/84a3aa/" class="page-nav-centre page-nav-centre-prev"><div class="tooltip">redis参数说明</div></a> <a href="/pages/1c16df/" class="page-nav-centre page-nav-centre-next"><div class="tooltip">redis集群的三种模式</div></a></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/pages/84a3aa/" class="prev">redis参数说明</a></span> <span class="next"><a href="/pages/1c16df/">redis集群的三种模式</a>→
+      </span></p></div></div></div> <div class="article-list"><div class="article-title"><a href="/archives/" class="iconfont icon-bi">最近更新</a></div> <div class="article-wrapper"><dl><dd>01</dd> <dt><a href="/pages/52d644/"><div>redis持久化</div></a> <span>12-08</span></dt></dl><dl><dd>02</dd> <dt><a href="/pages/42ab41/"><div>redis为什么这么快</div></a> <span>12-08</span></dt></dl><dl><dd>03</dd> <dt><a href="/pages/e581de/"><div>redis的优缺点</div></a> <span>12-08</span></dt></dl> <dl><dd></dd> <dt><a href="/archives/" class="more">更多文章&gt;</a></dt></dl></div></div> </main></div> <div class="footer"><div class="icons"><a href="mailto:1340904087@qq.com" title="发邮件" target="_blank" class="iconfont icon-youjian"></a><a href="https://github.com/summerking1" title="GitHub" target="_blank" class="iconfont icon-github"></a></div> 
+  Theme by
+  <a href="https://github.com/xugaoyi/vuepress-theme-vdoing" target="_blank" title="本站主题">Vdoing</a> 
+    | Copyright © 2019-2020
+    <span>Evan Xu | <a href="https://github.com/xugaoyi/vuepress-theme-vdoing/blob/master/LICENSE" target="_blank">MIT License</a></span></div> <div class="buttons"><div title="返回顶部" class="button blur go-to-top iconfont icon-fanhuidingbu" style="display:none;"></div> <div title="去评论" class="button blur go-to-comment iconfont icon-pinglun" style="display:none;"></div> <div title="主题模式" class="button blur theme-mode-but iconfont icon-zhuti"><ul class="select-box" style="display:none;"><li class="iconfont icon-zidong">跟随系统</li><li class="iconfont icon-rijianmoshi">浅色模式</li><li class="iconfont icon-yejianmoshi">深色模式</li><li class="iconfont icon-yuedu">阅读模式</li></ul></div></div> <!----></div><div class="global-ui"><div></div></div></div>
+    <script src="/assets/js/app.cbdf558d.js" defer></script><script src="/assets/js/2.faed1170.js" defer></script><script src="/assets/js/135.d44c3c36.js" defer></script>
+  </body>
+</html>
